@@ -31,27 +31,27 @@
 
 Я заказал на Ozon модуль NRF52840, совместимый с Nice!Nano V2.0 / Bluetooth Pro Micro NRF52840. С AliExpress ждать пришлось бы дольше, да и было непонятно, что именно приедет.
 
-<img src="assets/images/2.webp" alt="Контроллер" width="640">
+<a href="assets/images/2.webp"><img src="assets/images/2.webp" alt="Контроллер" width="220"></a>
 
 Пока плата ехала, я прикинул корпус:
 
-<img src="assets/images/3.jpg" alt="Первый набросок корпуса" width="640">
+<a href="assets/images/3.jpg"><img src="assets/images/3.jpg" alt="Первый набросок корпуса" width="220"></a>
 
 Когда контроллер приехал, начались первые тесты в Arduino IDE. Задачи были две: написать прошивку и потом все это спаять. На макетной плате все вело себя отвратительно: то работает, то отваливается, то кажется, что ошибка в коде, то кажется, что в проводах.
 
-<img src="assets/images/4.jpg" alt="Первые тесты" width="640">
-<img src="assets/images/5.jpg" alt="Первые тесты" width="640">
-<img src="assets/images/6.jpg" alt="Первые тесты" width="640">
+<a href="assets/images/4.jpg"><img src="assets/images/4.jpg" alt="Первые тесты" width="220"></a>
+<a href="assets/images/5.jpg"><img src="assets/images/5.jpg" alt="Первые тесты" width="220"></a>
+<a href="assets/images/6.jpg"><img src="assets/images/6.jpg" alt="Первые тесты" width="220"></a>
 
 В итоге выяснилось, что часть проблем была в макетной плате. Эти платы удобны для быстрых проверок, но если контакт плохой, начинается настоящая лотерея. А еще обнаружилась проблема с самим китайским клоном контроллера.
 
 В комплекте была схема пинов, но нигде не было сказано, что часть пинов не работает или имеет другую нумерацию. Несколько дней ушло на ковыряние неочевидных проблем.
 
-<img src="assets/images/7.webp" alt="Схема пинов" width="640">
+<a href="assets/images/7.webp"><img src="assets/images/7.webp" alt="Схема пинов" width="220"></a>
 
 Чтобы разобраться, я написал отдельный скетч-тестер. Он сканирует пины: я замыкаю их на GND и смотрю, какой пин реально отзывается. Так стало понятно, что на китайском клоне половина заявленных пинов действительно может оказаться бесполезной.
 
-<img src="assets/images/8.png" alt="Тест пинов" width="640">
+<a href="assets/images/8.png"><img src="assets/images/8.png" alt="Тест пинов" width="220"></a>
 
 Скетч тестера лежит здесь: [firmware/TesterPins/TesterPins.ino](firmware/TesterPins/TesterPins.ino).
 
@@ -91,13 +91,13 @@
 
 Финальная схема подключения компонентов:
 
-<img src="assets/images/9.png" alt="Схема распайки" width="640">
+<a href="assets/images/9.png"><img src="assets/images/9.png" alt="Схема распайки" width="220"></a>
 
 Проект схемы: <https://app.cirkitdesigner.com/project/74aa2c99-3412-43d3-a665-44ffdaccba8f>
 
 Изначально в схеме была отдельная кнопка включения и программирования, но позже я от нее отказался.
 
-<img src="assets/images/10.jpg" alt="Планирование схемы" width="640">
+<a href="assets/images/10.jpg"><img src="assets/images/10.jpg" alt="Планирование схемы" width="220"></a>
 
 ## Пайка и первые тесты
 
@@ -105,21 +105,21 @@
 
 Сначала припаивается силовой провод. Тут важно сделать все аккуратно: ничего не должно торчать, все закрывается оплеткой.
 
-<img src="assets/images/11.jpg" alt="Пайка питания" width="640">
+<a href="assets/images/11.jpg"><img src="assets/images/11.jpg" alt="Пайка питания" width="220"></a>
 
 Потом первые тесты: устройство уже видно в компьютере без прямого подключения. На заднем плане еще старая схема с отдельной кнопкой включения.
 
-<img src="assets/images/12.jpg" alt="Первый беспроводной тест" width="640">
+<a href="assets/images/12.jpg"><img src="assets/images/12.jpg" alt="Первый беспроводной тест" width="220"></a>
 
 Дальше - пайка всего устройства. Почти сразу стало понятно, что без “третьей руки” будет тяжело: контакты мелкие, плату нужно держать, а видеть хочется больше. Лупа с зажимами сильно упростила жизнь.
 
-<img src="assets/images/13.jpg" alt="Пайка устройства" width="640">
-<img src="assets/images/14.jpg" alt="Пайка устройства" width="640">
-<img src="assets/images/15.jpg" alt="Пайка устройства" width="640">
-<img src="assets/images/16.jpg" alt="Пайка устройства" width="640">
-<img src="assets/images/17.jpg" alt="Пайка устройства" width="640">
-<img src="assets/images/18.jpg" alt="Пайка устройства" width="640">
-<img src="assets/images/19.jpg" alt="Пайка устройства" width="640">
+<a href="assets/images/13.jpg"><img src="assets/images/13.jpg" alt="Пайка устройства" width="220"></a>
+<a href="assets/images/14.jpg"><img src="assets/images/14.jpg" alt="Пайка устройства" width="220"></a>
+<a href="assets/images/15.jpg"><img src="assets/images/15.jpg" alt="Пайка устройства" width="220"></a>
+<a href="assets/images/16.jpg"><img src="assets/images/16.jpg" alt="Пайка устройства" width="220"></a>
+<a href="assets/images/17.jpg"><img src="assets/images/17.jpg" alt="Пайка устройства" width="220"></a>
+<a href="assets/images/18.jpg"><img src="assets/images/18.jpg" alt="Пайка устройства" width="220"></a>
+<a href="assets/images/19.jpg"><img src="assets/images/19.jpg" alt="Пайка устройства" width="220"></a>
 
 ## Веб-конфигуратор
 
@@ -133,57 +133,57 @@
 
 Сначала я сделал корпус высотой 40 мм, но после печати стало понятно, что он смотрится плохо: слишком высокий, плюс при печати лежа появились “лесенки”. Тогда я решил печатать стоя и уменьшил высоту до 25 мм.
 
-<img src="assets/images/Корпус.png" alt="Проект корпуса" width="640">
+<a href="assets/images/Корпус.png"><img src="assets/images/Корпус.png" alt="Проект корпуса" width="220"></a>
 
 Модель в Tinkercad: <https://www.tinkercad.com/things/2l7U8HlfgIG-rutonypad-v31>
 
 Версий корпуса было несколько. То нужна полка для контроллера заряда, то больше места под крышку, то защелки получаются слишком хлипкими. Всего модель печаталась 11 раз, до конца печати дожили 4 версии. В одном из заходов даже сломался принтер: датчик температуры сопла показывал постоянные 220 градусов.
 
-<img src="assets/images/21.jpg" alt="Корпус" width="640">
-<img src="assets/images/22.jpg" alt="Корпус" width="640">
-<img src="assets/images/23.jpg" alt="Корпус" width="640">
-<img src="assets/images/24.jpg" alt="Корпус" width="640">
-<img src="assets/images/25.jpg" alt="Корпус" width="640">
-<img src="assets/images/26.jpg" alt="Корпус" width="640">
-<img src="assets/images/27.jpg" alt="Корпус" width="640">
+<a href="assets/images/21.jpg"><img src="assets/images/21.jpg" alt="Корпус" width="220"></a>
+<a href="assets/images/22.jpg"><img src="assets/images/22.jpg" alt="Корпус" width="220"></a>
+<a href="assets/images/23.jpg"><img src="assets/images/23.jpg" alt="Корпус" width="220"></a>
+<a href="assets/images/24.jpg"><img src="assets/images/24.jpg" alt="Корпус" width="220"></a>
+<a href="assets/images/25.jpg"><img src="assets/images/25.jpg" alt="Корпус" width="220"></a>
+<a href="assets/images/26.jpg"><img src="assets/images/26.jpg" alt="Корпус" width="220"></a>
+<a href="assets/images/27.jpg"><img src="assets/images/27.jpg" alt="Корпус" width="220"></a>
 
 В итоге корпус все-таки напечатался. Как выяснилось позже, это был только второй корпус.
 
-<img src="assets/images/28.png" alt="Печать корпуса" width="640">
-<img src="assets/images/29.jpg" alt="Печать корпуса" width="640">
-<img src="assets/images/30.jpg" alt="Печать корпуса" width="640">
-<img src="assets/images/31.jpg" alt="Печать корпуса" width="640">
-<img src="assets/images/32.jpg" alt="Печать корпуса" width="640">
-<img src="assets/images/33.jpg" alt="Печать корпуса" width="640">
+<a href="assets/images/28.png"><img src="assets/images/28.png" alt="Печать корпуса" width="220"></a>
+<a href="assets/images/29.jpg"><img src="assets/images/29.jpg" alt="Печать корпуса" width="220"></a>
+<a href="assets/images/30.jpg"><img src="assets/images/30.jpg" alt="Печать корпуса" width="220"></a>
+<a href="assets/images/31.jpg"><img src="assets/images/31.jpg" alt="Печать корпуса" width="220"></a>
+<a href="assets/images/32.jpg"><img src="assets/images/32.jpg" alt="Печать корпуса" width="220"></a>
+<a href="assets/images/33.jpg"><img src="assets/images/33.jpg" alt="Печать корпуса" width="220"></a>
 
 Дальше пошла отделка: шкурка, грунтовка, снова шкурка, покраска акрилом. Опыта было ноль, поэтому сначала вышло плохо. Потом после советов и мучений выяснилось, что губка дает более приятный результат.
 
 Но появилась шагрень - мелкие неровности поверхности. Для устройства, которое хочется держать в руке, это неприятно. Я надеялся, что лак выровняет покрытие. Не выровнял. Там, где поверхность была гладкой, все стало красиво, а там, где была шагрень, стало еще хуже.
 
-<img src="assets/images/34.jpg" alt="Подготовка и покраска" width="640">
-<img src="assets/images/35.jpg" alt="Подготовка и покраска" width="640">
-<img src="assets/images/36.jpg" alt="Подготовка и покраска" width="640">
-<img src="assets/images/37.jpg" alt="Подготовка и покраска" width="640">
-<img src="assets/images/38.jpg" alt="Лак и шагрень" width="640">
-<img src="assets/images/39.jpg" alt="Лак и шагрень" width="640">
-<img src="assets/images/40.jpg" alt="Лак и шагрень" width="640">
-<img src="assets/images/41.jpg" alt="Лак и шагрень" width="640">
-<img src="assets/images/42.jpg" alt="Лак и шагрень" width="640">
+<a href="assets/images/34.jpg"><img src="assets/images/34.jpg" alt="Подготовка и покраска" width="220"></a>
+<a href="assets/images/35.jpg"><img src="assets/images/35.jpg" alt="Подготовка и покраска" width="220"></a>
+<a href="assets/images/36.jpg"><img src="assets/images/36.jpg" alt="Подготовка и покраска" width="220"></a>
+<a href="assets/images/37.jpg"><img src="assets/images/37.jpg" alt="Подготовка и покраска" width="220"></a>
+<a href="assets/images/38.jpg"><img src="assets/images/38.jpg" alt="Лак и шагрень" width="220"></a>
+<a href="assets/images/39.jpg"><img src="assets/images/39.jpg" alt="Лак и шагрень" width="220"></a>
+<a href="assets/images/40.jpg"><img src="assets/images/40.jpg" alt="Лак и шагрень" width="220"></a>
+<a href="assets/images/41.jpg"><img src="assets/images/41.jpg" alt="Лак и шагрень" width="220"></a>
+<a href="assets/images/42.jpg"><img src="assets/images/42.jpg" alt="Лак и шагрень" width="220"></a>
 
 Пришлось печатать еще раз. Потом снова шкурить, шпаклевать, красить, ждать между слоями, покрывать лаком и сушить. В этот раз я уже выдерживал паузы дольше: между слоями краски около 2 часов, между слоями лака около 4 часов, потом сутки на сушку.
 
-<img src="assets/images/43.jpg" alt="Вторая попытка" width="640">
-<img src="assets/images/44.jpg" alt="Вторая попытка" width="640">
-<img src="assets/images/45.jpg" alt="Вторая попытка" width="640">
+<a href="assets/images/43.jpg"><img src="assets/images/43.jpg" alt="Вторая попытка" width="220"></a>
+<a href="assets/images/44.jpg"><img src="assets/images/44.jpg" alt="Вторая попытка" width="220"></a>
+<a href="assets/images/45.jpg"><img src="assets/images/45.jpg" alt="Вторая попытка" width="220"></a>
 
 И тут новая проблема: модель все еще слегка липкая, а после сушки в гардеробе белая часть облепилась ворсинками. Гардероб оказался худшим местом для сушки свежего лака.
 
-<img src="assets/images/46.jpg" alt="Ворсинки на покрытии" width="640">
+<a href="assets/images/46.jpg"><img src="assets/images/46.jpg" alt="Ворсинки на покрытии" width="220"></a>
 
 На этом моменте я сдался и позвал тяжелую артиллерию - Леру: <https://twitch.tv/solodvalery>. Для нее была напечатана еще одна модель, а вместе с ней отправились лаки, краски, грунтовки, шкурки и все остальное для нормальной покраски.
 
-<img src="assets/images/47.jpg" alt="Финальные попытки с корпусом" width="640">
-<img src="assets/images/48.jpg" alt="Финальные попытки с корпусом" width="640">
+<a href="assets/images/47.jpg"><img src="assets/images/47.jpg" alt="Финальные попытки с корпусом" width="220"></a>
+<a href="assets/images/48.jpg"><img src="assets/images/48.jpg" alt="Финальные попытки с корпусом" width="220"></a>
 
 ## Как пользоваться
 
