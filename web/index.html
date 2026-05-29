@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RutonyPad</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #0f0f0f; color: #e5e5e5; min-height: 100vh; padding: 24px; }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  h1 { font-size: 24px; font-weight: 650; margin-bottom: 4px; color: #fff; }
+  .subtitle { font-size: 13px; color: #777; margin-bottom: 18px; }
+  .hint { background: #141414; border: 1px solid #2a2a2a; border-radius: 10px; padding: 12px 14px; font-size: 13px; color: #bbb; margin-bottom: 18px; line-height: 1.45; }
+  .hint b { color: #fff; font-weight: 600; }
+  .status-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #444; flex-shrink: 0; transition: background 0.3s; }
+  .status-dot.connected { background: #22c55e; }
+  .status-dot.connecting { background: #f59e0b; animation: pulse 1s infinite; }
+  .status-text { font-size: 13px; color: #888; margin-right: auto; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .btn { padding: 8px 16px; border-radius: 7px; border: none; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.15s; }
+  .btn-primary { background: #2563eb; color: #fff; }
+  .btn-primary:hover:not(:disabled) { background: #1d4ed8; }
+  .btn-success { background: #16a34a; color: #fff; }
+  .btn-success:hover:not(:disabled) { background: #15803d; }
+  .btn-secondary { background: #1e293b; color: #cbd5e1; border: 1px solid #334155; }
+  .btn-secondary:hover:not(:disabled) { background: #263548; }
+  .btn:disabled { background: #1e293b; color: #475569; cursor: default; border-color: #253142; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+  .key-card { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; padding: 14px; }
+  .key-card.left-side  { border-left: 3px solid #2563eb; }
+  .key-card.right-side { border-left: 3px solid #7c3aed; }
+  .key-header { display: flex; align-items: baseline; gap: 8px; margin-bottom: 10px; }
+  .key-num { font-size: 18px; font-weight: 600; color: #fff; }
+  .key-pin { font-size: 11px; color: #555; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+  .mods { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+  .mod-btn { padding: 4px 10px; border-radius: 5px; border: 1px solid #333; background: #111; color: #888; font-size: 12px; cursor: pointer; user-select: none; }
+  .mod-btn.active { background: #1e3a5f; border-color: #2563eb; color: #60a5fa; }
+  .key-row { display: flex; align-items: center; gap: 8px; }
+  .key-row label { font-size: 12px; color: #666; white-space: nowrap; }
+  .key-select { flex: 1; background: #111; border: 1px solid #333; color: #e0e0e0; border-radius: 6px; padding: 6px 8px; font-size: 13px; min-width: 0; }
+  .key-select:focus { outline: none; border-color: #2563eb; }
+  .preview { font-size: 11px; color: #4ade80; margin-top: 8px; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; min-height: 16px; }
+  .actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
+  .local-note { font-size: 11px; color: #555; margin-top: 6px; }
+  .toast { position: fixed; bottom: 24px; right: 24px; background: #1e293b; border: 1px solid #334155; color: #e0e0e0; padding: 10px 18px; border-radius: 8px; font-size: 13px; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 99; }
+  .toast.show { opacity: 1; }
+  .toast.success { border-color: #16a34a; color: #4ade80; }
+  .toast.error { border-color: #dc2626; color: #f87171; }
+  .log-box { margin: 0 0 18px; }
+  .log-box.hidden { display: none; }
+  .log { background: #050505; border: 1px solid #222; border-radius: 8px; padding: 10px; color: #aaa; font: 11px/1.45 ui-monospace, SFMono-Regular, Consolas, monospace; white-space: pre-wrap; max-height: 180px; overflow: auto; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>RutonyPad</h1>
+  <p class="subtitle">Настройка клавиш через Bluetooth</p>
+
+  <div class="hint">
+    Для настройки зажми <b>D33 + D11</b> на 5 секунд, затем выбери устройство <b>RutonyCfg</b>.
+  </div>
+
+  <div class="status-bar">
+    <div class="status-dot" id="statusDot"></div>
+    <span class="status-text" id="statusText">Не подключено</span>
+    <button class="btn btn-secondary" id="btnLog" onclick="toggleLog()">Показать лог</button>
+    <button class="btn btn-primary" id="btnConnect" onclick="toggleConnect()">Подключить</button>
+  </div>
+
+  <div class="log-box hidden" id="logBox"><div class="log" id="diagLog"></div></div>
+
+  <div class="grid" id="keysGrid"></div>
+
+  <div class="actions">
+    <button class="btn btn-success" id="btnSave" onclick="saveConfig()" disabled>Сохранить</button>
+    <button class="btn btn-secondary" onclick="resetDefaults()">Сбросить</button>
+    <button class="btn btn-secondary" id="btnKeyboard" onclick="returnToKeyboard()" disabled>Вернуться в режим клавиатуры</button>
+  </div>
+  <p class="local-note">Настройки сохраняются на устройстве и локально в браузере.</p>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const SERVICE_UUID = '6f1d9a20-0e56-4ce9-bbb0-2a7a4f43c9a1';
+const READ_UUID    = 'b3f3d4d8-13d6-4f9b-a5e1-6d798cf08e73';
+const WRITE_UUID   = '4adcf6d5-71d0-4d5c-9e6c-e0f703c8a3bf';
+const CONTROL_UUID = '7b22f15a-a28e-4ce6-b613-4b49f2793c0e';
+
+const MODIFIERS = [
+  { label: 'Ctrl',  bit: 0x01 },
+  { label: 'Shift', bit: 0x02 },
+  { label: 'Alt',   bit: 0x04 },
+  { label: 'Win',   bit: 0x08 },
+];
+
+const KEYS = [
+  { label: '—', code: 0x00 },
+  { label: 'A', code: 0x04 }, { label: 'B', code: 0x05 }, { label: 'C', code: 0x06 },
+  { label: 'D', code: 0x07 }, { label: 'E', code: 0x08 }, { label: 'F', code: 0x09 },
+  { label: 'G', code: 0x0A }, { label: 'H', code: 0x0B }, { label: 'I', code: 0x0C },
+  { label: 'J', code: 0x0D }, { label: 'K', code: 0x0E }, { label: 'L', code: 0x0F },
+  { label: 'M', code: 0x10 }, { label: 'N', code: 0x11 }, { label: 'O', code: 0x12 },
+  { label: 'P', code: 0x13 }, { label: 'Q', code: 0x14 }, { label: 'R', code: 0x15 },
+  { label: 'S', code: 0x16 }, { label: 'T', code: 0x17 }, { label: 'U', code: 0x18 },
+  { label: 'V', code: 0x19 }, { label: 'W', code: 0x1A }, { label: 'X', code: 0x1B },
+  { label: 'Y', code: 0x1C }, { label: 'Z', code: 0x1D },
+  { label: '1', code: 0x1E }, { label: '2', code: 0x1F }, { label: '3', code: 0x20 },
+  { label: '4', code: 0x21 }, { label: '5', code: 0x22 }, { label: '6', code: 0x23 },
+  { label: '7', code: 0x24 }, { label: '8', code: 0x25 }, { label: '9', code: 0x26 },
+  { label: '0', code: 0x27 },
+  { label: 'Enter', code: 0x28 }, { label: 'Esc', code: 0x29 },
+  { label: 'Backspace', code: 0x2A }, { label: 'Tab', code: 0x2B },
+  { label: 'Space', code: 0x2C }, { label: 'Delete', code: 0x4C },
+  { label: 'F1',  code: 0x3A }, { label: 'F2',  code: 0x3B }, { label: 'F3',  code: 0x3C },
+  { label: 'F4',  code: 0x3D }, { label: 'F5',  code: 0x3E }, { label: 'F6',  code: 0x3F },
+  { label: 'F7',  code: 0x40 }, { label: 'F8',  code: 0x41 }, { label: 'F9',  code: 0x42 },
+  { label: 'F10', code: 0x43 }, { label: 'F11', code: 0x44 }, { label: 'F12', code: 0x45 },
+  { label: 'PrintScreen', code: 0x46 },
+  { label: '←', code: 0x50 }, { label: '→', code: 0x4F },
+  { label: '↑', code: 0x52 }, { label: '↓', code: 0x51 },
+  { label: 'Home', code: 0x4A }, { label: 'End', code: 0x4D },
+  { label: 'PgUp', code: 0x4B }, { label: 'PgDn', code: 0x4E },
+  { label: 'Insert', code: 0x49 },
+  { label: 'Num0', code: 0x62 }, { label: 'Num1', code: 0x59 },
+  { label: 'Num2', code: 0x5A }, { label: 'Num3', code: 0x5B },
+  { label: 'Num4', code: 0x5C }, { label: 'Num5', code: 0x5D },
+  { label: 'Num6', code: 0x5E }, { label: 'Num7', code: 0x5F },
+  { label: 'Num8', code: 0x60 }, { label: 'Num9', code: 0x61 },
+];
+
+const PINS  = ['D33','D2','D20','D21','D23','D1','D12','D11'];
+const SIDES = ['right','right','right','right','left','left','left','left'];
+const DEFAULT_MOD  = 0x07;
+const DEFAULT_KEYS = [0x1E,0x1F,0x20,0x21,0x22,0x23,0x24,0x25];
+const STORAGE_KEY = 'rutonypad_config_combo_v1';
+
+function log(msg) {
+  console.log(msg);
+  const el = document.getElementById('diagLog');
+  el.textContent += msg + '\n';
+  el.scrollTop = el.scrollHeight;
+}
+
+function toggleLog() {
+  const box = document.getElementById('logBox');
+  const btn = document.getElementById('btnLog');
+  const hidden = box.classList.toggle('hidden');
+  btn.textContent = hidden ? 'Показать лог' : 'Скрыть лог';
+}
+
+function logErr(prefix, e) {
+  const msg = prefix + ': ' + (e && e.name ? e.name + ': ' : '') + (e && e.message ? e.message : String(e));
+  console.error(msg, e);
+  log('ERROR: ' + msg);
+}
+
+function loadLocalConfig() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length === 8) return parsed;
+    }
+  } catch(e) {}
+  return null;
+}
+
+function saveLocalConfig() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(config)); } catch(e) {}
+}
+
+let config = loadLocalConfig() || Array.from({length:8}, (_,i) => ({
+  modifier: DEFAULT_MOD,
+  keycode: DEFAULT_KEYS[i]
+}));
+
+let bleDevice = null;
+let charRead = null;
+let charWrite = null;
+let charControl = null;
+
+async function toggleConnect() {
+  if (bleDevice && bleDevice.gatt && bleDevice.gatt.connected) {
+    log('Disconnect requested by user');
+    bleDevice.gatt.disconnect();
+    return;
+  }
+
+  setStatus('connecting');
+  document.getElementById('diagLog').textContent = '';
+  log('SERVICE_UUID = ' + SERVICE_UUID);
+  log('READ_UUID    = ' + READ_UUID);
+  log('WRITE_UUID   = ' + WRITE_UUID);
+  log('CONTROL_UUID = ' + CONTROL_UUID);
+
+  try {
+    log('Requesting BLE device... Choose RutonyCfg for configuration.');
+    bleDevice = await navigator.bluetooth.requestDevice({
+      filters: [{ namePrefix: 'Rutony' }],
+      optionalServices: [SERVICE_UUID]
+    });
+    log('Selected device: ' + (bleDevice.name || '(no name)') + ' ' + bleDevice.id);
+    bleDevice.addEventListener('gattserverdisconnected', onDisconnect);
+
+    log('Connecting GATT...');
+    const server = await bleDevice.gatt.connect();
+    log('GATT connected: ' + server.connected);
+
+    log('Getting config service...');
+    const service = await server.getPrimaryService(SERVICE_UUID);
+    log('Config service found: ' + service.uuid);
+
+    log('Listing characteristics...');
+    const chars = await service.getCharacteristics();
+    log('Characteristics: ' + JSON.stringify(chars.map(c => ({uuid: c.uuid, properties: {
+      read: c.properties.read,
+      write: c.properties.write,
+      writeWithoutResponse: c.properties.writeWithoutResponse,
+      notify: c.properties.notify
+    }}))));
+
+    log('Getting READ characteristic...');
+    charRead = await service.getCharacteristic(READ_UUID);
+    log('READ characteristic found.');
+
+    log('Getting WRITE characteristic...');
+    charWrite = await service.getCharacteristic(WRITE_UUID);
+    log('WRITE characteristic found.');
+
+    log('Getting CONTROL characteristic...');
+    try {
+      charControl = await service.getCharacteristic(CONTROL_UUID);
+      log('CONTROL characteristic found.');
+    } catch (e) {
+      charControl = null;
+      log('CONTROL characteristic not found. Return button will be disabled.');
+    }
+
+    log('Reading config...');
+    const val = await charRead.readValue();
+    if (val.byteLength < 16) throw new Error('Config read returned only ' + val.byteLength + ' bytes');
+
+    for (let i = 0; i < 8; i++) {
+      config[i] = {
+        modifier: val.getUint8(i * 2),
+        keycode:  val.getUint8(i * 2 + 1),
+      };
+    }
+    saveLocalConfig();
+    renderCards();
+
+    setStatus('connected');
+    showToast('Подключено. Конфиг загружен с устройства.', 'success');
+    log('Done: connected and config loaded.');
+  } catch(e) {
+    logErr('Connection failed', e);
+    setStatus('disconnected');
+    if (e.name !== 'NotFoundError') showToast('Ошибка: ' + e.message, 'error');
+  }
+}
+
+async function saveConfig() {
+  if (!charWrite) return;
+  const data = new Uint8Array(16);
+  for (let i = 0; i < 8; i++) {
+    data[i * 2]     = config[i].modifier;
+    data[i * 2 + 1] = config[i].keycode;
+  }
+
+  try {
+    log('Writing config: ' + Array.from(data).join(','));
+    if (charWrite.properties.writeWithoutResponse) {
+      await charWrite.writeValueWithoutResponse(data);
+    } else {
+      await charWrite.writeValue(data);
+    }
+    saveLocalConfig();
+    showToast('Сохранено на устройстве!', 'success');
+    log('Config saved to device.');
+  } catch(e) {
+    logErr('Write failed', e);
+    showToast('Ошибка записи: ' + e.message, 'error');
+  }
+}
+
+
+async function returnToKeyboard() {
+  if (!charControl) {
+    showToast('CONTROL characteristic недоступна', 'error');
+    return;
+  }
+  try {
+    log('Sending command: return to keyboard mode');
+    const data = new Uint8Array([0xA1]);
+    if (charControl.properties.writeWithoutResponse) {
+      await charControl.writeValueWithoutResponse(data);
+    } else {
+      await charControl.writeValue(data);
+    }
+    showToast('Команда отправлена. Устройство вернётся в режим клавиатуры.', 'success');
+  } catch (e) {
+    logErr('Return to keyboard failed', e);
+    showToast('Ошибка команды: ' + e.message, 'error');
+  }
+}
+
+function onDisconnect() {
+  setStatus('disconnected');
+  charRead = charWrite = charControl = null;
+  showToast('Устройство отключено', '');
+  log('GATT disconnected.');
+}
+
+function setStatus(state) {
+  const dot = document.getElementById('statusDot');
+  const text = document.getElementById('statusText');
+  const btn = document.getElementById('btnConnect');
+  const save = document.getElementById('btnSave');
+  const keyboard = document.getElementById('btnKeyboard');
+  dot.className = 'status-dot ' + (state === 'connected' ? 'connected' : state === 'connecting' ? 'connecting' : '');
+
+  if (state === 'connected') {
+    text.textContent = 'Подключено к RutonyCfg';
+    btn.textContent = 'Отключить';
+    btn.disabled = false;
+    save.disabled = false;
+    if (keyboard) keyboard.disabled = !charControl;
+  } else if (state === 'connecting') {
+    text.textContent = 'Подключение...';
+    btn.disabled = true;
+    save.disabled = true;
+    if (keyboard) keyboard.disabled = true;
+  } else {
+    text.textContent = 'Не подключено';
+    btn.textContent = 'Подключить';
+    btn.disabled = false;
+    save.disabled = true;
+    if (keyboard) keyboard.disabled = true;
+  }
+}
+
+function renderCards() {
+  const grid = document.getElementById('keysGrid');
+  grid.innerHTML = '';
+  for (let i = 0; i < 8; i++) {
+    const card = document.createElement('div');
+    card.className = `key-card ${SIDES[i]}-side`;
+
+    const header = document.createElement('div');
+    header.className = 'key-header';
+    header.innerHTML = `<span class="key-num">${i+1}</span><span class="key-pin">${PINS[i]}</span>`;
+    card.appendChild(header);
+
+    const modsDiv = document.createElement('div');
+    modsDiv.className = 'mods';
+    const previewEl = document.createElement('div');
+    previewEl.className = 'preview';
+
+    MODIFIERS.forEach(mod => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'mod-btn' + ((config[i].modifier & mod.bit) ? ' active' : '');
+      b.textContent = mod.label;
+      b.onclick = () => {
+        config[i].modifier ^= mod.bit;
+        b.classList.toggle('active', !!(config[i].modifier & mod.bit));
+        updatePreview(i, previewEl);
+        saveLocalConfig();
+      };
+      modsDiv.appendChild(b);
+    });
+    card.appendChild(modsDiv);
+
+    const keyRow = document.createElement('div');
+    keyRow.className = 'key-row';
+    const lbl = document.createElement('label');
+    lbl.textContent = 'Клавиша:';
+    const sel = document.createElement('select');
+    sel.className = 'key-select';
+
+    KEYS.forEach(k => {
+      const opt = document.createElement('option');
+      opt.value = k.code;
+      opt.textContent = k.label;
+      if (k.code === config[i].keycode) opt.selected = true;
+      sel.appendChild(opt);
+    });
+
+    sel.onchange = () => {
+      config[i].keycode = parseInt(sel.value, 10);
+      updatePreview(i, previewEl);
+      saveLocalConfig();
+    };
+
+    keyRow.appendChild(lbl);
+    keyRow.appendChild(sel);
+    card.appendChild(keyRow);
+    updatePreview(i, previewEl);
+    card.appendChild(previewEl);
+    grid.appendChild(card);
+  }
+}
+
+function updatePreview(i, el) {
+  const mods = MODIFIERS.filter(m => config[i].modifier & m.bit).map(m => m.label);
+  const key = KEYS.find(k => k.code === config[i].keycode);
+  const parts = [...mods, (key && key.code !== 0) ? key.label : '—'];
+  el.textContent = parts.join(' + ');
+}
+
+function resetDefaults() {
+  config = Array.from({length:8}, (_,i) => ({ modifier: DEFAULT_MOD, keycode: DEFAULT_KEYS[i] }));
+  saveLocalConfig();
+  renderCards();
+  showToast('Сброшено к дефолту локально. Чтобы записать в устройство, нажми “Сохранить”.', '');
+}
+
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + (type || '');
+  setTimeout(() => t.className = 'toast', 3000);
+}
+
+renderCards();
+setStatus('disconnected');
+log('Page loaded. Для настройки выбирай устройство RutonyCfg. Фильтр поиска: Rutony.');
+log('Power button is not used. Device is always keyboard + config service.');
+
+if (!navigator.bluetooth) {
+  document.getElementById('btnConnect').disabled = true;
+  document.getElementById('statusText').textContent = 'Web Bluetooth не поддерживается — используй Chrome/Edge';
+  log('Web Bluetooth is not supported in this browser.');
+}
+</script>
+</body>
+</html>

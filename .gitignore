@@ -1,0 +1,15 @@
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Arduino/build artifacts
+*.hex
+*.elf
+*.bin
+*.uf2
+*.map
+*.eep
+
+# 3D printer generated files
+*.gcode
