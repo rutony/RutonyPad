@@ -185,6 +185,12 @@
 <a href="assets/images/47.jpg"><img src="assets/thumbs/47.jpg" alt="Финальные попытки с корпусом" width="220" height="140"></a>
 <a href="assets/images/48.jpg"><img src="assets/thumbs/48.jpg" alt="Финальные попытки с корпусом" width="220" height="140"></a>
 
+Было решено капитально переделать способ печати: выставить максимальные режимы сглаживания, спаивания и поддержек. Я просто устал от бесконечного брака. Поэтому напечатал модель под углом, чтобы она была максимально крепкой.
+
+<a href="assets/images/57.jpg"><img src="assets/thumbs/57.jpg" alt="Печать под углом" width="220" height="140"></a>
+<a href="assets/images/58.jpg"><img src="assets/thumbs/58.jpg" alt="Печать под углом" width="220" height="140"></a>
+<a href="assets/images/59.jpg"><img src="assets/thumbs/59.jpg" alt="Печать под углом" width="220" height="140"></a>
+
 Лере были отправлены все мои поделки, в том числе пара из многочисленных неудачных печатей.
 
 <a href="assets/images/49.jpg"><img src="assets/thumbs/49.jpg" alt="Поделки для Леры" width="220" height="140"></a>
