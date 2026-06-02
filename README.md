@@ -185,6 +185,23 @@
 <a href="assets/images/47.jpg"><img src="assets/thumbs/47.jpg" alt="Финальные попытки с корпусом" width="220" height="140"></a>
 <a href="assets/images/48.jpg"><img src="assets/thumbs/48.jpg" alt="Финальные попытки с корпусом" width="220" height="140"></a>
 
+Лере были отправлены все мои поделки, в том числе пара из многочисленных неудачных печатей.
+
+<a href="assets/images/49.jpg"><img src="assets/thumbs/49.jpg" alt="Поделки для Леры" width="220" height="140"></a>
+
+Она зашкурила и покрыла корпус грунтом, а потом наметила логотип. Правда, логотип оказался неправильным, а пока мы переписывались, из-за моего сбитого режима он уже был покрашен неверно. Поэтому решили поправить его прямо на уже покрашенной модели. Но в любом случае получилось аккуратно.
+
+<a href="assets/images/50.jpg"><img src="assets/thumbs/50.jpg" alt="Грунт и логотип" width="220" height="140"></a>
+<a href="assets/images/51.jpg"><img src="assets/thumbs/51.jpg" alt="Грунт и логотип" width="220" height="140"></a>
+<a href="assets/images/52.jpg"><img src="assets/thumbs/52.jpg" alt="Грунт и логотип" width="220" height="140"></a>
+<a href="assets/images/53.jpg"><img src="assets/thumbs/53.jpg" alt="Грунт и логотип" width="220" height="140"></a>
+<a href="assets/images/54.jpg"><img src="assets/thumbs/54.jpg" alt="Грунт и логотип" width="220" height="140"></a>
+
+Итак, корпус готов. Выглядит отлично. Гораздо лучше, чем мои поделки. Сразу видно, что у Леры есть опыт.
+
+<a href="assets/images/55.jpg"><img src="assets/thumbs/55.jpg" alt="Готовый корпус" width="220" height="140"></a>
+<a href="assets/images/56.jpg"><img src="assets/thumbs/56.jpg" alt="Готовый корпус" width="220" height="140"></a>
+
 ## Как пользоваться
 
 1. Залить прошивку [RutonyPad10.ino](firmware/RutonyPad10/RutonyPad10.ino) на nRF52840.
