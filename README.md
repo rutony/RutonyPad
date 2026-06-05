@@ -2,6 +2,9 @@
 
 Небольшая беспроводная BLE-клавиатура на 8 кнопок для управления OBS и другими горячими клавишами. Проект вырос из идеи “сделать за пару часов подарок”, а в итоге прошел через китайский клон nRF52840, тестер пинов, несколько версий корпуса, пайку, веб-конфигуратор и отдельный режим настройки.
 
+<a href="assets/images/69.jpg"><img src="assets/thumbs/69-large.jpg" alt="Готовый RutonyPad" width="360" height="230"></a>
+<a href="assets/images/71.jpg"><img src="assets/thumbs/71-large.jpg" alt="Готовый RutonyPad" width="360" height="230"></a>
+
 
 ## Что внутри
 
@@ -202,6 +205,7 @@
 <a href="assets/images/46.jpg"><img src="assets/thumbs/46.jpg" alt="Ворсинки на покрытии" width="220" height="140"></a>
 
 На этом моменте я сдался и позвал тяжелую артиллерию - Леру: <https://twitch.tv/solodvalery>. Для нее была напечатана еще одна модель, а вместе с ней отправились лаки, краски, грунтовки, шкурки и все остальное для нормальной покраски.
+
 Было решено капитально переделать способ печати: выставить максимальные режимы сглаживания, спаивания и поддержек. Я просто устал от бесконечного брака. Поэтому напечатал модель под углом, чтобы она была максимально крепкой.
 
 <a href="assets/images/47.jpg"><img src="assets/thumbs/47.jpg" alt="Финальные попытки с корпусом" width="220" height="140"></a>
@@ -226,3 +230,31 @@
 
 <a href="assets/images/55.jpg"><img src="assets/thumbs/55.jpg" alt="Готовый корпус" width="220" height="140"></a>
 <a href="assets/images/56.jpg"><img src="assets/thumbs/56.jpg" alt="Готовый корпус" width="220" height="140"></a>
+
+## Финальная сборка
+
+Что ж, пришло время собирать устройство. Ставим свитчи. Ставим контроллер заряда и запаиваем его пластиком, чтобы он не болтался, а еще был упор: время от времени на него будет давить USB-C при зарядке. Добавляем термостойкую изоленту. Не уверен, что она тут обязательна, но пусть будет.
+
+<a href="assets/images/60.jpg"><img src="assets/thumbs/60.jpg" alt="Финальная сборка" width="220" height="140"></a>
+<a href="assets/images/61.jpg"><img src="assets/thumbs/61.jpg" alt="Финальная сборка" width="220" height="140"></a>
+<a href="assets/images/62.jpg"><img src="assets/thumbs/62.jpg" alt="Финальная сборка" width="220" height="140"></a>
+<a href="assets/images/63.jpg"><img src="assets/thumbs/63.jpg" alt="Финальная сборка" width="220" height="140"></a>
+
+Добавляем аккумулятор и приклеиваем его термостойким скотчем. Он все же тяжеловат и может болтаться, поэтому фиксируем аж несколько раз. Пластиком не запаивал: нужен вариант замены. И добавляем петельку на руку.
+
+<a href="assets/images/64.jpg"><img src="assets/thumbs/64.jpg" alt="Аккумулятор и петля" width="220" height="140"></a>
+<a href="assets/images/65.jpg"><img src="assets/thumbs/65.jpg" alt="Аккумулятор и петля" width="220" height="140"></a>
+
+Теперь выравниваем провода и состыковываем крышку с корпусом. Верхняя крышка специально делалась без зазора в миллиметр, чтобы ее можно было просто поставить и не клеить. А если что-то понадобится поправить, корпус можно вскрыть: снять свитч и аккуратно вытянуть крышку со свитчами. Ставим прозрачные кейкапы.
+
+<a href="assets/images/66.jpg"><img src="assets/thumbs/66.jpg" alt="Сборка корпуса" width="220" height="140"></a>
+<a href="assets/images/67.jpg"><img src="assets/thumbs/67.jpg" alt="Сборка корпуса" width="220" height="140"></a>
+
+Итоговый результат.
+
+<a href="assets/images/68.jpg"><img src="assets/thumbs/68.jpg" alt="Итоговый результат" width="220" height="140"></a>
+<a href="assets/images/69.jpg"><img src="assets/thumbs/69.jpg" alt="Итоговый результат" width="220" height="140"></a>
+<a href="assets/images/71.jpg"><img src="assets/thumbs/71.jpg" alt="Итоговый результат" width="220" height="140"></a>
+<a href="assets/images/72.jpg"><img src="assets/thumbs/72.jpg" alt="Итоговый результат" width="220" height="140"></a>
+<a href="assets/images/73.jpg"><img src="assets/thumbs/73.jpg" alt="Итоговый результат" width="220" height="140"></a>
+<a href="assets/images/74.jpg"><img src="assets/thumbs/74.jpg" alt="Итоговый результат" width="220" height="140"></a>
